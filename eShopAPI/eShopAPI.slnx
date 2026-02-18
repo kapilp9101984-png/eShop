@@ -1,6 +1,11 @@
 <Solution>
+  <Folder Name="/Customer/" />
+  <Folder Name="/Inventory/" />
+  <Folder Name="/Order/" />
+  <Folder Name="/Product/" />
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
   </Folder>
-  <Project Path="eShopWebAPI/eShopWebAPI.csproj" />
+  <Folder Name="/User/" />
+  <Project Path="eShop.Gateway/eShop.Gateway.csproj" />
 </Solution>
