@@ -1,0 +1,84 @@
+{
+  "Routes": [
+    {
+      "UpstreamHttpMethod": [ "POST" ],
+      "UpstreamPathTemplate": "/Gateway/Auth",
+      "DownstreamScheme": "http",
+      "DownstreamPathTemplate": "/api/Authentication",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5177
+        }
+      ]
+    },
+    {
+      "UpstreamHttpMethod": [ "GET", "POST", "REQUEST", "DELETE", "PUT" ],
+      "UpstreamPathTemplate": "/Gateway/Order/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamPathTemplate": "/api/Order/{everything}",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5034
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+     /* "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Limit": 4,
+        "Period": "60s",
+        "PeriodTimespan": 15
+      }*/
+    },
+    {
+      "UpstreamHttpMethod": [ "GET", "POST", "REQUEST", "DELETE", "PUT" ],
+      "UpstreamPathTemplate": "/Gateway/inventory/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamPathTemplate": "/api/Inventory/{everything}",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5148
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    {
+      "UpstreamHttpMethod": [ "GET", "POST", "REQUEST", "DELETE", "PUT" ],
+      "UpstreamPathTemplate": "/Gateway/customer/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamPathTemplate": "/api/Customer/{everything}",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5020
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    {
+      "UpstreamHttpMethod": [ "GET", "POST", "REQUEST", "DELETE", "PUT" ],
+      "UpstreamPathTemplate": "/Gateway/product/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamPathTemplate": "/api/Product/{everything}",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5272
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    }
+
+  ]
+}

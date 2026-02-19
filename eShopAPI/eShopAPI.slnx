@@ -1,11 +1,27 @@
 <Solution>
-  <Folder Name="/Customer/" />
-  <Folder Name="/Inventory/" />
-  <Folder Name="/Order/" />
-  <Folder Name="/Product/" />
+  <Folder Name="/Autentication/">
+    <Project Path="Authentication.WebAPI/Authentication.WebAPI.csproj" Id="e9ad4548-7aaf-4d60-95e5-a68c82cd9f44" />
+  </Folder>
+  <Folder Name="/Customer/">
+    <Project Path="Customer.WebAPI/Customer.WebAPI.csproj" Id="f2aebb1d-6130-4582-9f0f-625f7f205ad9" />
+  </Folder>
+  <Folder Name="/Gateway/">
+    <Project Path="eShopGateway/eShopGateway.csproj" Id="d3d752de-b4b1-4e4e-8368-e663285c498b" />
+  </Folder>
+  <Folder Name="/Inventory/">
+    <Project Path="Inventory.WebAPI/Inventory.WebAPI.csproj" Id="22ff3190-ede9-4d12-9737-5d51a76ced8f" />
+  </Folder>
+  <Folder Name="/Order/">
+    <Project Path="Order.WebAPI/Order.WebAPI.csproj" Id="656ec014-9eaf-485c-8ddd-0f0427ba880a" />
+  </Folder>
+  <Folder Name="/Product/">
+    <Project Path="Product.WebAPI/Product.WebAPI.csproj" Id="ddb16913-4f43-4a74-aecd-4feaf26b65f4" />
+  </Folder>
+  <Folder Name="/Shared/">
+    <Project Path="JWTAuthenticationManager/JWTAuthenticationManager.csproj" Id="15d2303a-3d22-434e-be7d-70ecd2db06af" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
   </Folder>
   <Folder Name="/User/" />
-  <Project Path="eShop.Gateway/eShop.Gateway.csproj" />
 </Solution>
