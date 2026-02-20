@@ -6,7 +6,7 @@
     <Project Path="Customer.WebAPI/Customer.WebAPI.csproj" Id="f2aebb1d-6130-4582-9f0f-625f7f205ad9" />
   </Folder>
   <Folder Name="/Gateway/">
-    <Project Path="eShopGateway/eShopGateway.csproj" Id="d3d752de-b4b1-4e4e-8368-e663285c498b" />
+    <Project Path="APIGateway/APIGateway.csproj" Id="ac3e9e5e-4dc2-45e3-923f-239c8064ef03" />
   </Folder>
   <Folder Name="/Inventory/">
     <Project Path="Inventory.WebAPI/Inventory.WebAPI.csproj" Id="22ff3190-ede9-4d12-9737-5d51a76ced8f" />

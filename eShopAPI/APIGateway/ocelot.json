@@ -25,14 +25,14 @@
       ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
-      }
-     /* "RateLimitOptions": {
+      },
+      "RateLimitOptions": {
         "ClientWhitelist": [],
         "EnableRateLimiting": true,
         "Limit": 4,
         "Period": "60s",
         "PeriodTimespan": 15
-      }*/
+      }
     },
     {
       "UpstreamHttpMethod": [ "GET", "POST", "REQUEST", "DELETE", "PUT" ],
