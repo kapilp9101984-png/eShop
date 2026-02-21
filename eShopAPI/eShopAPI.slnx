@@ -1,5 +1,8 @@
 <Solution>
   <Folder Name="/Autentication/">
+    <Project Path="Auth.Application/Auth.Application.csproj" Id="51236300-ef33-4b9e-81f8-3bc7168028fc" />
+    <Project Path="Auth.Domain/Auth.Domain.csproj" Id="d0622394-4206-47dd-8ea9-1754ff8715c5" />
+    <Project Path="Auth.Infrastructure/Auth.Infrastructure.csproj" Id="f93b9442-0873-4df7-8392-4260aa42ca93" />
     <Project Path="Authentication.WebAPI/Authentication.WebAPI.csproj" Id="e9ad4548-7aaf-4d60-95e5-a68c82cd9f44" />
   </Folder>
   <Folder Name="/Customer/">
@@ -23,5 +26,4 @@
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
   </Folder>
-  <Folder Name="/User/" />
 </Solution>

@@ -14,5 +14,5 @@ var app = builder.Build();
 await app.UseOcelot();
 // Configure the HTTP request pipeline.
 app.UseAuthentication();
-
+app.UseAuthorization();
 app.Run();
