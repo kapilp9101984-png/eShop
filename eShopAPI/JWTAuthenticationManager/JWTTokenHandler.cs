@@ -24,22 +24,12 @@ namespace JWTAuthenticationManager
 
         public AuthenticationResponse? GenerateJwtToken(AuthenticationRequest request)
         {
-            if (string.IsNullOrEmpty(request.UserName) || string.IsNullOrEmpty(request.Password))
-            {
-                return null;
-            }
-
-            var selectedUser = _userAccounts.Where(p=>p.UserName == request.UserName && p.Password == request.Password).FirstOrDefault();
-
-            if (selectedUser == null) {
-                return null;
-            }
-
+            
             var tokenExpireTimeStamp = DateTime.Now.AddMinutes(JWT_TOKEN_VALIDITY_MINS);
             var tokenKey = Encoding.ASCII.GetBytes(JWT_SECURITY_KEY);
             var claimIdnetity = new ClaimsIdentity(new List<Claim> { 
                 new Claim(JwtRegisteredClaimNames.Name, request.UserName),
-                new Claim("Role",selectedUser.Role)
+                new Claim("Role",request.Role[0])
             });
 
             var signingCredential =  new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature);
@@ -57,7 +47,7 @@ namespace JWTAuthenticationManager
 
             return new AuthenticationResponse 
             { 
-                UserName = selectedUser.UserName,
+                UserName = request.UserName,
                 ExpireIn = (int)tokenExpireTimeStamp.Subtract(DateTime.Now).TotalSeconds,
                 Token = token
             };

@@ -10,8 +10,7 @@ namespace Auth.Domain.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         public string Name { get; set; }
-        public required string Email { get; set; }
-        public required string Password { get; set; }        
+        public required string Email { get; set; }      
         public required string UserName { get; set; }
         public required string MobileNumber { get; set; }
         public string PasswordHash { get; set; }

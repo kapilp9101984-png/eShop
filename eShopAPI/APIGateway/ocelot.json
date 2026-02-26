@@ -4,7 +4,19 @@
       "UpstreamHttpMethod": [ "POST" ],
       "UpstreamPathTemplate": "/Gateway/Auth",
       "DownstreamScheme": "http",
-      "DownstreamPathTemplate": "/api/Authentication",
+      "DownstreamPathTemplate": "/api/Authentication/login",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5177
+        }
+      ]
+    },
+    {
+      "UpstreamHttpMethod": [ "POST" ],
+      "UpstreamPathTemplate": "/Gateway/SignUP",
+      "DownstreamScheme": "http",
+      "DownstreamPathTemplate": "/api/Authentication/register",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",

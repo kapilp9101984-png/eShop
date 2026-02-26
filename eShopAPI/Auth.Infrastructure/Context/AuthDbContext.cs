@@ -23,7 +23,7 @@ namespace Auth.Infrastructure.Context
             if (!optionsBuilder.IsConfigured)
             {
                 // Default to a local SQLite database if no options provided
-                optionsBuilder.UseSqlite("Data Source=auth.db");
+                //optionsBuilder.UseSqlite("Data Source=auth.db");
             }
         }
 
