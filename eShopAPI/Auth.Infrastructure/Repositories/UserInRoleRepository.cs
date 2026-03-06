@@ -29,18 +29,25 @@ namespace Auth.Infrastructure.Repositories
             return await _db.UserInRoles.ToListAsync();
         }
 
-        public async Task<Role> GetRoleOfUser(int UserID)
+        public async Task<List<Role>> GetRoleOfUser(int UserID)
         {
-            var rel = await _db.UserInRoles.FirstOrDefaultAsync(x => x.UserID == UserID);
-            if(rel == null) return null;
-            return await _db.Roles.FindAsync(rel.RoleID);
+            var rel = _db.UserInRoles.Where(x => x.UserID == UserID && x.IsDeleted == false && x.IsActive).ToList();
+            if (rel.Count() > 0) { 
+                var roleIDs = rel.Select(x => x.RoleID).ToList();
+                return _db.Roles.Where(x => roleIDs.Contains(x.ID) && x.IsDeleted == false && x.IsActive).ToList();
+            }            
+            return new List<Role>();
         }
 
-        public async Task<User> GetUserInRole(int RoleID)
+        public async Task<List<User>> GetUserInRole(int RoleID)
         {
-            var rel = await _db.UserInRoles.FirstOrDefaultAsync(x => x.RoleID == RoleID);
-            if(rel == null) return null;
-            return await _db.Users.FindAsync(rel.UserID);
+            var rel = _db.UserInRoles.Where(x => x.RoleID == RoleID && x.IsDeleted == false && x.IsActive).ToList();
+            if (rel.Count() > 0)
+            {
+                var userIds = rel.Select(x => x.UserID).ToList();
+                return _db.Users.Where(x => userIds.Contains(x.ID)).ToList();
+            }
+            return new List<User>();
         }
 
         public async Task<User> RemoveUserRole(int UserID, int RoleID)

@@ -12,15 +12,7 @@ namespace JWTAuthenticationManager
     {
         public const string JWT_SECURITY_KEY = "sfsdfwrwer34r34fsfsfs3434dsfsdf343434";
         private const int JWT_TOKEN_VALIDITY_MINS = 20;
-        private readonly List<UserAccounts> _userAccounts;
-        public JWTTokenHandler()
-        {
-            _userAccounts = new List<UserAccounts> 
-            { 
-                new UserAccounts {UserName = "admin", Password="admin123" , Role = "Administrator"},
-                new UserAccounts { UserName = "kapil" , Password = "kapil123" , Role="User"}
-            };
-        }
+        
 
         public AuthenticationResponse? GenerateJwtToken(AuthenticationRequest request)
         {
@@ -53,5 +45,6 @@ namespace JWTAuthenticationManager
             };
 
         }
+
     }
 }
