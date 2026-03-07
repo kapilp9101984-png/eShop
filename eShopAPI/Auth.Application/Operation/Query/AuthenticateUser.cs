@@ -16,14 +16,16 @@ namespace Auth.Application.Operation.Query
         private readonly IRole role;
         private readonly IUserInRole userInRole;
         private readonly IRefreshToken refreshToken;
+        private readonly IUser user;
         public AuthenticateUser(IAuthentication _authentication, IEncryption _encryption, IRole _role,
-            IUserInRole _userInRole, IRefreshToken _refreshToken)
+            IUserInRole _userInRole, IUser _user, IRefreshToken _refreshToken)
         {
             authentication = _authentication;
             encryption = _encryption;
             role = _role;
             userInRole = _userInRole;
             refreshToken = _refreshToken;
+            user = _user;
         }
         public async Task<AuthResponse> Handle(LoginRequest request, CancellationToken cancellationToken)
         {
@@ -61,7 +63,11 @@ namespace Auth.Application.Operation.Query
                             response.ExpiresIn = JWTAuthToken.ExpireIn;
                             response.UserName = loggedInUser.UserName;
                             response.Status = ResponseStatus.Success;
-
+                            if (loggedInUser.FailedLoginAttempts > 0)
+                            {
+                                loggedInUser.FailedLoginAttempts = 0;
+                                user.UpdateUser(loggedInUser);
+                            }
                         }
                     }
                     else
@@ -73,12 +79,16 @@ namespace Auth.Application.Operation.Query
                 else
                 {
                     response.Status = ResponseStatus.UnAuthorized;
-                    if ((3 - loggedInUser.FailedLoginAttempts) > 0)
+                    if (loggedInUser.FailedLoginAttempts < 3)
                     {
                         response.Message = "User name and password not matched,only " + (3 - loggedInUser.FailedLoginAttempts) + " attepts are left.";
+                        loggedInUser.FailedLoginAttempts = loggedInUser.FailedLoginAttempts + 1;
+                        await user.UpdateUser(loggedInUser);
                     }
-                    else
+                    else if (loggedInUser.FailedLoginAttempts >= 3)
                     {
+                        loggedInUser.LockoutEnd = DateTime.Now.AddHours(4);
+                        await user.UpdateUser(loggedInUser);
                         response.Message = "User name and password not matched,only you reached maximum attempts now your account locked.";
                     }
                 }

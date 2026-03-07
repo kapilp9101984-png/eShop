@@ -27,7 +27,7 @@ namespace Auth.Application.Operation.Command
 
             user.PasswordHash = passwordEncryption.PasswordHash;
             user.PasswordSalt = passwordEncryption.PasswordSalt;
-
+            user.IsLocked = false;
             if (await UserRepositry.CreateUser(user))
             {
                 return "User created successfull, you will get email activation email soon.";

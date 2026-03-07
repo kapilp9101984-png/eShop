@@ -16,6 +16,7 @@ namespace Auth.Domain.Entity
         public string PasswordHash { get; set; }
         public string PasswordSalt { get; set; }
         public bool IsEmailVerified { get; set; }
+        public bool IsLocked { get; set; }
         public int FailedLoginAttempts {  get; set; }
         public DateTime LockoutEnd { get; set; }
        
