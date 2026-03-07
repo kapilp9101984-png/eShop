@@ -38,8 +38,7 @@ namespace Auth.Infrastructure.Repositories
 
         public async Task<User> GetUser(string UserID)
         {
-            if (!int.TryParse(UserID, out var id)) return null;
-            return await _db.Users.FindAsync(id);
+            return await _db.Users.Where(item => item.UserName.ToLower() == UserID.ToLower()).FirstOrDefaultAsync();
         }
 
         public async Task<User> UpdateUser(User user)

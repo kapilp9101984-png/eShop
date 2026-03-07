@@ -29,8 +29,12 @@ builder.Services.AddScoped<IEmailVerificationTokens,EmailVerificationTokensRepos
 builder.Services.AddScoped<IMapper,Mapper>();
 builder.Services.AddScoped<IEncryption,Encryption>();
 
+// Register authentication implementation so MediatR handlers depending on IAuthentication can be constructed
+builder.Services.AddScoped<IAuthentication, Auth.Infrastructure.Services.Authentication>();
 
 builder.Services.AddSingleton<JWTTokenHandler>();
+
+builder.Services.AddHttpContextAccessor();
 // Register MediatR handlers from the Auth.Application assembly
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateUser).Assembly));
 var app = builder.Build();

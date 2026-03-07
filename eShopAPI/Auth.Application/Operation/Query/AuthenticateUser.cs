@@ -48,14 +48,13 @@ namespace Auth.Application.Operation.Query
                             {
                                 UserID = loggedInUser.ID,
                                 Token = token,
-                                IsLogOut = false,
                                 ExpireOn = DateTime.Now.AddMinutes(30),
                                 IsActive = true,
-                                IsRevoke = false,
                                 IsDeleted = false,
-                                ReplacedByToken = string.Empty,
                                 CreatedAt = DateTime.Now,
-                                UpdatedAt = DateTime.Now
+                                UpdatedAt = DateTime.Now,
+                                IPAddress = string.Empty,
+                                IsLogOut = false
                             });
                             response.RefreshToken = token;
                             response.Token = JWTAuthToken.Token;
@@ -68,20 +67,36 @@ namespace Auth.Application.Operation.Query
                     else
                     {
                         response.Status = ResponseStatus.RoleNotGranted;
+                        response.Message = "Role not granted for this user , please contact to admin.";
                     }
                 }
                 else
                 {
                     response.Status = ResponseStatus.UnAuthorized;
+                    if ((3 - loggedInUser.FailedLoginAttempts) > 0)
+                    {
+                        response.Message = "User name and password not matched,only " + (3 - loggedInUser.FailedLoginAttempts) + " attepts are left.";
+                    }
+                    else
+                    {
+                        response.Message = "User name and password not matched,only you reached maximum attempts now your account locked.";
+                    }
                 }
             }
             else if (loggedInUser != null && !loggedInUser.IsActive)
             {
                 response.Status = ResponseStatus.NotActivated;
+                response.Message = "User name and password not matched,only you reached maximum attempts now your account locked.";
             }
             else if (loggedInUser != null && !loggedInUser.IsEmailVerified)
             {
                 response.Status = ResponseStatus.NotActivated;
+                response.Message = "Your account email id verfication is still pending, please verify you account first.";
+            }
+            else
+            {
+                response.Status = ResponseStatus.UnAuthorized;
+                response.Message = "User name and password not verified please contact to administrator!";
             }
             // TODO: implement authentication logic and return JWT/token
             return response;

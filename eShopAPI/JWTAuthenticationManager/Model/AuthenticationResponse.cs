@@ -9,5 +9,6 @@ namespace JWTAuthenticationManager.Model
         public string UserName { get; set; }
         public string Token { get; set; }
         public int ExpireIn {  get; set; }
+        public string RefreshToken { get; set; }
     }
 }

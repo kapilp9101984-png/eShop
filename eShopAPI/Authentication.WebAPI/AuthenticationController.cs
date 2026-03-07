@@ -1,5 +1,6 @@
 ﻿using Auth.Application.DTO;
 using Auth.Application.Request;
+using Auth.Application.Response;
 using JWTAuthenticationManager;
 using JWTAuthenticationManager.Model;
 using MediatR;
@@ -13,7 +14,7 @@ namespace Authentication.WebAPI
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private readonly JWTTokenHandler  _jWtTokenHandler;
+        private readonly JWTTokenHandler _jWtTokenHandler;
         private readonly IMediator _mediator;
         public AuthenticationController(JWTTokenHandler jWTTokenHandler, IMediator mediator)
         {
@@ -22,18 +23,24 @@ namespace Authentication.WebAPI
         }
 
         [HttpPost("login")]
-        public ActionResult<AuthenticationResponse> Authenticate([FromBody] AuthenticationRequest request)
+        public async Task<ActionResult<AuthenticationResponse>> Authenticate([FromBody] LoginRequest request)
         {
-            //var authenticationResponse = _jWtTokenHandler.GenerateJwtToken(request);
+            AuthResponse result = await _mediator.Send(new LoginRequest(request.UserName, request.Password));
 
-            //if (authenticationResponse == null) 
-            //{
-            //    return Unauthorized();
-            //}
-
-            //return authenticationResponse;
-
-            return Ok(null);
+            if (result.Status == ResponseStatus.Success)
+            {
+                return Ok(new AuthenticationResponse
+                {
+                    UserName = result.UserName,
+                    Token = result.Token,
+                    ExpireIn = result.ExpiresIn,
+                    RefreshToken = result.RefreshToken                    
+                });
+            }
+            else
+            {
+                return Unauthorized(new { Message = result.Message });
+            }
         }
 
         [HttpPost("register")]

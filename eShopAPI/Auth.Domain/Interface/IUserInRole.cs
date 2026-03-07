@@ -5,7 +5,7 @@ namespace Auth.Domain.Interface
     public interface IUserInRole
     {
         Task<List<UserInRole>> GetAllUserInRole();
-        Task<User> GetUserInRole(int RoleID);
+        Task<List<User>> GetUserInRole(int RoleID);
         Task<List<Role>> GetRoleOfUser(int UserID);
         Task<bool> AssignUserRole(int UserID, List<int> RoleID);
         Task<User> RemoveUserRole(int UserID, int RoleID);
