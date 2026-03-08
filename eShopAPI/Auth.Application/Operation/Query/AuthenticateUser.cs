@@ -33,7 +33,7 @@ namespace Auth.Application.Operation.Query
 
             User loggedInUser = await authentication.VerifyUser(request.UserName);
 
-            if (loggedInUser != null && loggedInUser.IsEmailVerified && loggedInUser.IsActive)
+            if (loggedInUser != null && loggedInUser.IsEmailVerified && loggedInUser.IsActive && loggedInUser.IsLocked)
             {
                 if (encryption.VerifyPassword(request.Password, loggedInUser.PasswordHash, loggedInUser.PasswordSalt))
                 {
@@ -102,6 +102,11 @@ namespace Auth.Application.Operation.Query
             {
                 response.Status = ResponseStatus.NotActivated;
                 response.Message = "Your account email id verfication is still pending, please verify you account first.";
+            }
+            else if (loggedInUser != null && loggedInUser.IsLocked)
+            {
+                response.Status = ResponseStatus.AccountLocked;
+                response.Message = "Your account is locked wait for "+loggedInUser.LockoutEnd.ToString("dd-MM-yyyy hh:mm:ss")+" .";
             }
             else
             {

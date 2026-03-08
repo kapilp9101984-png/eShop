@@ -21,5 +21,6 @@ namespace Auth.Application.Response
         UnAuthorized,
         NotEmailVerified,
         RoleNotGranted,
+        AccountLocked,
     }
 }
