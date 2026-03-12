@@ -8,6 +8,7 @@ using Auth.Application.Operation.Command;
 using Microsoft.EntityFrameworkCore;
 using Auth.Infrastructure.Services;
 using Auth.Application.Services.Interface;
+using Auth.Infrastructure.BackgroundServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
 // or falls back to a local file `auth.db` when not provided.
 builder.Services.AddDbContext<AuthDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddHostedService<NotificationServices>();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -28,6 +31,7 @@ builder.Services.AddScoped<IPasswordResetTokens,PasswordResetTokensRepository >(
 builder.Services.AddScoped<IEmailVerificationTokens,EmailVerificationTokensRepository >();
 builder.Services.AddScoped<IMapper,Mapper>();
 builder.Services.AddScoped<IEncryption,Encryption>();
+builder.Services.AddScoped<IOutboxEvents, OutboxEventsRepository>();
 
 // Register authentication implementation so MediatR handlers depending on IAuthentication can be constructed
 builder.Services.AddScoped<IAuthentication, Auth.Infrastructure.Services.Authentication>();

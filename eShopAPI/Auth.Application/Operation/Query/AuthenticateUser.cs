@@ -4,6 +4,7 @@ using Auth.Application.Services.Interface;
 using Auth.Domain.Entity;
 using Auth.Domain.Interface;
 using MediatR;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,8 +18,9 @@ namespace Auth.Application.Operation.Query
         private readonly IUserInRole userInRole;
         private readonly IRefreshToken refreshToken;
         private readonly IUser user;
+        private readonly IOutboxEvents outboxEvents;
         public AuthenticateUser(IAuthentication _authentication, IEncryption _encryption, IRole _role,
-            IUserInRole _userInRole, IUser _user, IRefreshToken _refreshToken)
+            IUserInRole _userInRole, IUser _user, IRefreshToken _refreshToken,IOutboxEvents _outboxEvents)
         {
             authentication = _authentication;
             encryption = _encryption;
@@ -26,6 +28,7 @@ namespace Auth.Application.Operation.Query
             userInRole = _userInRole;
             refreshToken = _refreshToken;
             user = _user;
+            outboxEvents = _outboxEvents;
         }
         public async Task<AuthResponse> Handle(LoginRequest request, CancellationToken cancellationToken)
         {
@@ -90,6 +93,16 @@ namespace Auth.Application.Operation.Query
                         loggedInUser.LockoutEnd = DateTime.Now.AddHours(4);
                         await user.UpdateUser(loggedInUser);
                         response.Message = "User name and password not matched,only you reached maximum attempts now your account locked.";
+
+                        await outboxEvents.CreateOutboxEvents(new OutboxEvents
+                        {
+                            EventType = "UserLocked",
+                            Payload = JsonSerializer.Serialize(new { UserID = loggedInUser.ID, Email = loggedInUser.Email }),
+                            CreatedAt = DateTime.UtcNow,
+                            RetryCount = 0,
+                            IsCompleted = false,
+                        });
+
                     }
                 }
             }

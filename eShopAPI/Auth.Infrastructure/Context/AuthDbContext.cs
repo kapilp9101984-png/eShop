@@ -17,6 +17,7 @@ namespace Auth.Infrastructure.Context
         public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
         public DbSet<PasswordResetTokens> PasswordResetTokens { get; set; } = null!;
         public DbSet<EmailVerificationTokens> EmailVerificationTokens { get; set; } = null!;
+        public DbSet<OutboxEvents> OutboxEvents { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
