@@ -10,13 +10,15 @@ using System.Text.Json.Serialization;
 
 namespace Auth.Application.Operation.Command
 {
-    public class CreateUser(IUser _userRepo, IMapper mapper, IEncryption encryption,IOutboxEvents outboxEvents) : IRequestHandler<UserRequest, string>
+    public class CreateUserHandler(IUser _userRepo, IMapper mapper, IEncryption encryption,
+        IOutboxEvents outboxEvents,IEmailVerificationTokens emailVerificationTokens) : IRequestHandler<UserRequest, string>
     {
         public IUser UserRepositry { get; set; } = _userRepo;
         public IMapper Mapper { get; set; } = mapper;
         public IEncryption Encryption { get; set; } = encryption;
 
         public IOutboxEvents OutboxEvents { get; set; } = outboxEvents;
+        public IEmailVerificationTokens EmailVerificationTokens { get; set; } = emailVerificationTokens;
 
         public async Task<string> Handle(UserRequest request, CancellationToken cancellationToken)
         {
@@ -34,10 +36,19 @@ namespace Auth.Application.Operation.Command
             user.IsLocked = false;
             if (await UserRepositry.CreateUser(user))
             {
+                var emailToken = Guid.NewGuid().ToString();
+                await EmailVerificationTokens.CreateEmailVerificationToken(new EmailVerificationTokens
+                {
+                    UserID = user.ID,
+                    Token = emailToken,                    
+                    ExpiredOn = DateTime.UtcNow.AddHours(24),
+                    IsActive = false
+                });
+
                 await OutboxEvents.CreateOutboxEvents(new OutboxEvents
                 {
                     EventType = "UserCreated",
-                    Payload = JsonSerializer.Serialize(new { UserID = user.ID, Email = user.Email }),
+                    Payload = JsonSerializer.Serialize(new { UserID = user.ID, Email = user.Email , EmailToken = emailToken }),
                     CreatedAt = DateTime.UtcNow,
                     RetryCount = 0,
                     IsCompleted = false,                        

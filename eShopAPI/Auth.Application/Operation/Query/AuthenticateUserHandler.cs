@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Auth.Application.Operation.Query
 {
-    public class AuthenticateUser : IRequestHandler<LoginRequest, AuthResponse>
+    public class AuthenticateUserHandler : IRequestHandler<LoginRequest, AuthResponse>
     {
         private readonly IAuthentication authentication;
         private readonly IEncryption encryption;
@@ -19,7 +19,7 @@ namespace Auth.Application.Operation.Query
         private readonly IRefreshToken refreshToken;
         private readonly IUser user;
         private readonly IOutboxEvents outboxEvents;
-        public AuthenticateUser(IAuthentication _authentication, IEncryption _encryption, IRole _role,
+        public AuthenticateUserHandler(IAuthentication _authentication, IEncryption _encryption, IRole _role,
             IUserInRole _userInRole, IUser _user, IRefreshToken _refreshToken,IOutboxEvents _outboxEvents)
         {
             authentication = _authentication;

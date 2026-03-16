@@ -40,7 +40,7 @@ builder.Services.AddSingleton<JWTTokenHandler>();
 
 builder.Services.AddHttpContextAccessor();
 // Register MediatR handlers from the Auth.Application assembly
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateUser).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateUserHandler).Assembly));
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())

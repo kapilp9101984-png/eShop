@@ -14,6 +14,11 @@
   <Folder Name="/Inventory/">
     <Project Path="Inventory.WebAPI/Inventory.WebAPI.csproj" Id="22ff3190-ede9-4d12-9737-5d51a76ced8f" />
   </Folder>
+  <Folder Name="/Notification/">
+    <Project Path="Notification.Domain/Notification.Domain.csproj" Id="fa854dff-9bb2-4744-acc4-638d67aa1981" />
+    <Project Path="Notification.Infrasturcture/Notification.Infrasturcture.csproj" Id="25a8ee5e-deff-4d7c-bdc1-c7bc14f5ec7f" />
+    <Project Path="NotificationAPI/NotificationAPI.csproj" Id="4d1b0e34-0ed6-41b3-b925-c03cba2e147e" />
+  </Folder>
   <Folder Name="/Order/">
     <Project Path="Order.WebAPI/Order.WebAPI.csproj" Id="656ec014-9eaf-485c-8ddd-0f0427ba880a" />
   </Folder>

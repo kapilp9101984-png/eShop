@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Auth.Application.Operation.Query
 {
-    public class GetLoginUser
+    public class GetLoginUserHandler
     {
     }
 }
