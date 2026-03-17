@@ -8,6 +8,7 @@ namespace Notification.Domain.Entity
     {
         public int ID { get; set; }
         public string UserID { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
         public string EncryptedPassword { get; set; } = string.Empty;
         public string Hash { get; set; } = string.Empty;
         public string EncryptedKey { get; set; } = string.Empty;

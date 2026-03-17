@@ -6,7 +6,7 @@ namespace Notification.Infrasturcture.Implement
 {
     public class EmailSender : IEmailSender
     {
-        public async Task SendEmailAsync(string to, List<string> cc, string subject, string body)
+        public async Task SendEmailAsync(string to,string Name, List<string> cc, string subject, string body)
         {
             
             SmtpClient mySmtpClient = new SmtpClient();
@@ -22,19 +22,24 @@ namespace Notification.Infrasturcture.Implement
 
             // add from,to mailaddresses
             MailAddress from = new MailAddress("donotreply@example.com", "TestFromName");
-            MailAddress To = new MailAddress(to, "TestToName");            
+            MailAddress To = new MailAddress(to, string.IsNullOrEmpty(Name) ? to : Name);
             MailMessage myMail = new System.Net.Mail.MailMessage(from, To);
 
-            // add ReplyTo
-            MailAddress replyTo = new MailAddress("reply@example.com");
-            myMail.ReplyToList.Add(replyTo);
+            // add CC TO
+
+            foreach (var ccEmail in cc)
+            {
+                MailAddress ccAddress = new MailAddress(ccEmail);
+                myMail.CC.Add(ccAddress);
+            }
+
 
             // set subject and encoding
             myMail.Subject = subject;
             myMail.SubjectEncoding = System.Text.Encoding.UTF8;
 
             // set body-message and encoding
-            myMail.Body = "<b>Test Mail</b><br>using <b>HTML</b>.";
+            myMail.Body = body;
             myMail.BodyEncoding = System.Text.Encoding.UTF8;
             // text or html
             myMail.IsBodyHtml = true;
