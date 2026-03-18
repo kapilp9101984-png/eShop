@@ -7,13 +7,13 @@ namespace Notification.Domain.Interface
 {
     public interface IConfigurationDetails
     {
-        public Task<ConfigurationDetail> GetConfigurationDetails(string configurationName);
+        public Task<ConfigurationDetail> GetConfigurationDetails(string configurationKey);
         public Task<List<ConfigurationDetail>> GetAllConfigurationDetails();
 
         public Task<bool> SaveConfigurationDetails(ConfigurationDetail configurationDetail);
 
         public Task<ConfigurationDetail> UpdateConfigurationDetails(ConfigurationDetail configurationDetail);
 
-        public Task<bool> DeleteConfigurationDetails(string configurationName);
+        public Task<bool> DeleteConfigurationDetails(string configurationKey);
     }
 }
