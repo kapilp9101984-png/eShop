@@ -1,9 +1,7 @@
-using Auth.Domain.Entity;
 using Auth.Domain.Interface;
 using Auth.Infrastructure.Context;
 using Auth.Infrastructure.Repositories;
 using JWTAuthenticationManager;
-using MediatR;
 using Auth.Application.Operation.Command;
 using Microsoft.EntityFrameworkCore;
 using Auth.Infrastructure.Services;

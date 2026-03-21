@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Notification.Domain.Entity
+namespace Notification.Infrasturcture.DTOModel
 {
-    public class ConfigurationDetail
+    public class ConfigurationDetailsDTO
     {
-        public int ID { get; set; }      
         public required string ConfigurationKey { get; set; }
         public string Value { get; set; } = string.Empty;
         public bool IsSecret { get; set; } = false;
-        public bool IsActive { get; set; } = true;
-
     }
 }
